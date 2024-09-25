@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const appError = require('./starter/utils/appError')
 const globalErrorHandler = require('./starter/controllers/errorController');
 const app = express();
+const compression  = require('compression');
 
 app.set('view engine', 'pug');
 
@@ -48,7 +49,7 @@ app.use(hpp({
     ]
 }));
 
-
+app.use(compression());
 
 // ######################################################################
 

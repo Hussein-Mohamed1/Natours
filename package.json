@@ -11,13 +11,14 @@
     "start:prod": "cross-env NODE_ENV=production nodemon server.js",
     "debug": "node --inspect server.js",
     "watch:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js",
-    "build:js": "parcel watch ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js"
+    "build:js": "parcel build ./starter/public/js/index.js --out-dir ./starter/public/js --out-file bundle.js"
   },
   "author": "Hussein Mohamed",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
