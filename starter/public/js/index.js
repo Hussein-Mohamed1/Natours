@@ -1,4 +1,4 @@
-console.log("hello from bundel!");
+
 
 import { login, logOut } from './login';
 import { disPlayMap } from './leaflet';

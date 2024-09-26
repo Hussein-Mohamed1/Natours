@@ -9,7 +9,7 @@ const morgan = require('morgan');
 const appError = require('./starter/utils/appError')
 const globalErrorHandler = require('./starter/controllers/errorController');
 const app = express();
-const compression  = require('compression');
+const compression = require('compression');
 
 app.set('view engine', 'pug');
 
@@ -67,14 +67,25 @@ const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
-            defaultSrc: [],
-            connectSrc: ["'self'", ...connectSrcUrls],
-            scriptSrc: ["'self'", ...scriptSrcUrls],
+            defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
+            baseUri: ["'self'"],
+            fontSrc: ["'self'", ...fontSrcUrls],
+            scriptSrc: ["'self'", 'https:', 'http:', 'blob:', ...scriptSrcUrls],
+            frameSrc: ["'self'", 'https://js.stripe.com'],
+            objectSrc: ["'none'"],
             styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-            workerSrc: ["'self'", 'blob:'],
-            objectSrc: [],
+            workerSrc: ["'self'", 'blob:', 'https://m.stripe.network'],
+            childSrc: ["'self'", 'blob:'],
             imgSrc: ["'self'", 'blob:', 'data:', 'https:'],
-            fontSrc: ["'self'", ...fontSrcUrls]
+            formAction: ["'self'"],
+            connectSrc: [
+                "'self'",
+                "'unsafe-inline'",
+                'data:',
+                'blob:',
+                ...connectSrcUrls
+            ],
+            upgradeInsecureRequests: []
         }
     })
 );
