@@ -11,6 +11,8 @@ const globalErrorHandler = require('./starter/controllers/errorController');
 const app = express();
 const compression = require('compression');
 
+
+
 app.set('view engine', 'pug');
 
 app.set('views', path.join(__dirname, 'starter/views'));
