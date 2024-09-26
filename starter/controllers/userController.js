@@ -46,13 +46,6 @@ exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
         .toFile(`starter/public/img/users/${req.file.filename}`)
     next();
 })
-const deletePhotoFromServer = async photo => {
-    const path = `${__dirname}../public/img/users/${photo}`;
-    await fs.unlink(path, err => {
-        if (err) return console.log(err);
-        // console.log('Previous photo has been deleted');
-    });
-};
 exports.updateMe = catchAsync(async (req, res, next) => {
     if (req.body.password || req.body.passwordConfirm) return next(new appError(
         'This route is not for password updates. Please use /updateMyPassword.',
@@ -61,7 +54,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     const filterdBody = filterObj(req.body, 'email', 'name');
     if (req.file) {
         filterdBody.photo = req.file.filename;
-        await deletePhotoFromServer(req.user.photo)
     }
     const updatedUser = await User.findByIdAndUpdate(req.user._id, filterdBody, {
         new: true,
