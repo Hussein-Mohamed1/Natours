@@ -19,7 +19,7 @@ if (map) {
 
 if (signupBtn)
     signupBtn.addEventListener('submit', (event) => {
-        console.log("Form submitted");
+        // console.log("Form submitted");
         event.preventDefault();
         const name = document.getElementById('username').value;
         const email = document.getElementById('email').value;
@@ -30,7 +30,7 @@ if (signupBtn)
     })
 if (loginBtn)
     loginBtn.addEventListener('submit', (event) => {
-        console.log("Form submitted");
+        // console.log("Form submitted");
         event.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
