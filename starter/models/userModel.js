@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        default: '/img/users/default.jpg'
+        default: 'default.jpg'
     },
     password: {
         type: String,
@@ -58,26 +58,26 @@ userSchema.pre('save', async function (next) {
     next();
 })
 
-userSchema.pre('save' , function(next) {
-    if(!this.isModified('password') || this.isNew) return next();
+userSchema.pre('save', function (next) {
+    if (!this.isModified('password') || this.isNew) return next();
     this.passwordChangeAt = Date.now() - 1000;
     next();
 })
-userSchema.pre(/^find/ , function(next) {
-    this.find({active: {$ne: false}});
+userSchema.pre(/^find/, function (next) {
+    this.find({ active: { $ne: false } });
     next();
 })
 userSchema.methods.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
-userSchema.methods.changedPasswordAfter =  function(jwtTime) {
-    if(this.passwordChangeAt) {
-        const changedTime = parseInt(this.passwordChangeAt.getTime() / 1000 , 10);
-        return  changedTime > jwtTime;
+userSchema.methods.changedPasswordAfter = function (jwtTime) {
+    if (this.passwordChangeAt) {
+        const changedTime = parseInt(this.passwordChangeAt.getTime() / 1000, 10);
+        return changedTime > jwtTime;
     }
     return false;
 }
-userSchema.methods.createPasswordResetToken = function() {
+userSchema.methods.createPasswordResetToken = function () {
     const restToken = crypto.randomBytes(32).toString('hex');
     this.passwordResetToken = crypto.createHash('sha256').update(restToken).digest('hex');
     this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
